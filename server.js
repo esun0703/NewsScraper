@@ -31,8 +31,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/week18day3mongoose");
-//mongodb://heroku_4l3187cg:v2iudnvpujftoo722cjcpoviv8@ds151820.mlab.com:51820/heroku_4l3187cg
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/week18day3mongoose");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -89,6 +88,6 @@ app.get("/scrape", function(req, res) {
 
 
 // Listen on port 3000
-app.listen(3000, function() {
+app.listen(process.env.PORT||3000, function() {
     console.log("App running on port 3000!");
 });
