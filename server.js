@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 
 // Make public a static dir
 app.use(express.static("public"));
-
+console.log(process.env.MONGODB_URI);
 // Database configuration with mongoose
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/week18day3mongoose");
 var db = mongoose.connection;
