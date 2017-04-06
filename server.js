@@ -79,6 +79,34 @@ app.get("/scrape", function(req, res) {
     res.send("Scrape Complete");
 });
 
+//Grab articles scraped
+app.get("/articles", function(req, res) {
+    //Goes into article collection and finds all entries.
+    Article.find({}, function(err, doc) {
+        if (err) {
+            console.log(error);
+        } else {
+            res.json(doc);
+        }
+    });
+});
+
+// Grab an article by ObjectId
+app.get("/articles/:id", function(req, res) {
+    Article.findOne({ "_id": req.params.id })
+    .populate("note")
+    .exec(function(err, doc){
+        if (err){
+            console.log(err);
+        }
+        else {
+            res.json(doc);
+        }
+    });
+});
+
+
+
 
 
 
@@ -88,6 +116,6 @@ app.get("/scrape", function(req, res) {
 
 
 // Listen on port 3000
-app.listen(process.env.PORT||3000, function() {
+app.listen(process.env.PORT || 3000, function() {
     console.log("App running on port 3000!");
 });

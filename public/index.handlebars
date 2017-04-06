@@ -1,0 +1,15 @@
+<div class="row">
+	<div id="articleDisplay" class="col s6">
+		<h1>Article Scraper</h1>
+		{{#each article_data}}
+			<div id="articles">
+				<h6>{{this.title}}</h6>
+	        	<a>{{this.link}}</a>
+	        	<p>{{this.summary}}</p>
+			</div>
+		{{/each}}
+	</div>
+	<div id="notes" class="col s6">
+	
+	</div>
+</div>
