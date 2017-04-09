@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 // var Note = require("./mod")
-var Note = require("./models/Note.js");
+var Comment = require("./models/Comment.js");
 var Article = require("./models/Article.js");
 var request = require("request");
 var cheerio = require("cheerio");
@@ -105,7 +105,35 @@ app.get("/articles/:id", function(req, res) {
     });
 });
 
+// Create a new note or replace an existing note
+app.post("/articles/:id", function(req, res) {
+  // Create a new note and pass the req.body to the entry
+  var newComment = new Comment(req.body);
 
+  // And save the new note the db
+  newComment.save(function(error, doc) {
+    // Log any errors
+    if (error) {
+      console.log(error);
+    }
+    // Otherwise
+    else {
+      // Use the article id to find and update it's note
+      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
+      // Execute the above query
+      .exec(function(err, doc) {
+        // Log any errors
+        if (err) {
+          console.log(err);
+        }
+        else {
+          // Or send the document to the browser
+          res.send(doc);
+        }
+      });
+    }
+  });
+});
 
 
 
